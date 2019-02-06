@@ -18,3 +18,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// Fix to avoid 404 pages and get vue links work properly
+Route::get('{path}', "HomeController@index")->where('path', '([A-z\d-\/_.]+)?' );
