@@ -2008,12 +2008,19 @@ __webpack_require__.r(__webpack_exports__);
     console.log('Component mounted.');
   },
   methods: {
-    getProfilePhoto: function getProfilePhoto() {},
+    getProfilePhoto: function getProfilePhoto() {
+      return "img/profile/" + this.form.photo;
+    },
     updateInfo: function updateInfo() {
       var _this = this;
 
       this.$Progress.start();
       this.form.put('api/profile/').then(function () {
+        axios.get('api/profile').then(function (_ref) {
+          var data = _ref.data;
+          return _this.form.fill(data);
+        });
+
         _this.$Progress.finish();
       }).catch(function () {
         _this.$Progress.fail();
@@ -2043,8 +2050,8 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this3 = this;
 
-    axios.get('api/profile').then(function (_ref) {
-      var data = _ref.data;
+    axios.get('api/profile').then(function (_ref2) {
+      var data = _ref2.data;
       return _this3.form.fill(data);
     });
   }

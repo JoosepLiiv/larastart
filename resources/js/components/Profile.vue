@@ -163,12 +163,14 @@
 
         methods:{
             getProfilePhoto(){
-
+                return "img/profile/" + this.form.photo;
             },
             updateInfo(){
                 this.$Progress.start();
                 this.form.put('api/profile/')
                 .then(() => {
+                    axios.get('api/profile')
+                    .then(({data}) => (this.form.fill(data)));
                     this.$Progress.finish();
                 })
                 .catch(() => {
