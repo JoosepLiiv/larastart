@@ -11,6 +11,9 @@ window.Vue = require('vue');
 import { Form, HasError, AlertError } from 'vform';
 import moment from 'moment';
 
+import Gate from './Gate';
+Vue.prototype.$gate = new Gate(window.user);
+
 import Swal from 'sweetalert2';
 window.Swal = Swal;
 
@@ -85,6 +88,8 @@ window.Fire = new Vue();
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+
+Vue.component('not-found', require('./components/NotFound.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
