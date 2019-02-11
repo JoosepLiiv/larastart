@@ -23,7 +23,7 @@
                         <h5 class="widget-user-desc">Web Designer</h5>
                     </div>
                     <div class="widget-user-image">
-                        <img class="img-circle" src="" alt="User Avatar">
+                        <img class="img-circle" :src="getProfilePhoto()" alt="User Avatar">
                     </div>
                     <div class="card-footer">
                         <div class="row">
@@ -109,14 +109,14 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="password" class="col-sm-12 control-label">Passport (leave empty if not changing)</label>
+                                    <label for="password" class="col-sm-12 control-label">Password (leave empty if not changing)</label>
 
                                     <div class="col-sm-12">
                                     <input type="password"
                                         v-model="form.password"
                                         class="form-control"
                                         id="password"
-                                        placeholder="Passport"
+                                        placeholder="Password"
                                         :class="{ 'is-invalid': form.errors.has('password') }"
                                     >
                                      <has-error :form="form" field="password"></has-error>
@@ -162,13 +162,34 @@
         },
 
         methods:{
+            getProfilePhoto(){
+
+            },
+            updateInfo(){
+                this.$Progress.start();
+                this.form.put('api/profile/')
+                .then(() => {
+                    this.$Progress.finish();
+                })
+                .catch(() => {
+                    this.$Progress.fail();
+                });
+            },
             updateProfile(e){
                 let file = e.target.files[0];
                 var reader = new FileReader();
-                reader.onloadend = (file) => {
-                    this.form.photo = reader.result;
-                }
+                if(file['size'] < 2111775){
+                    reader.onloadend = (file) => {
+                        this.form.photo = reader.result;
+                    }
                 reader.readAsDataURL(file);
+                } else {
+                    Swal.fire({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: 'Profile image should be less than 2MB.',
+                    })
+                }
             }
         },
 
