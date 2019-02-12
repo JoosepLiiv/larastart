@@ -2304,6 +2304,12 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this6 = this;
 
+    Fire.$on('searching', function () {
+      var query = _this6.$parent.search;
+      axios.get('api/findUser?q=' + query).then(function (data) {
+        _this6.users = data.data;
+      }).catch(function () {});
+    });
     this.loadUsers();
     Fire.$on('AfterCreated', function () {
       _this6.loadUsers();
@@ -76519,7 +76525,15 @@ Vue.component('not-found', __webpack_require__(/*! ./components/NotFound.vue */ 
 
 var app = new Vue({
   el: '#app',
-  router: router
+  router: router,
+  data: {
+    search: ''
+  },
+  methods: {
+    searchit: function searchit() {
+      Fire.$emit('searching');
+    }
+  }
 });
 
 /***/ }),
