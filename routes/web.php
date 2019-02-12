@@ -19,5 +19,10 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+//Invoice view
+Route::get('invoice', function(){
+    return view('invoice');
+});
+
 // Fix to avoid 404 pages and get vue links work properly
 Route::get('{path}', "HomeController@index")->where('path', '([A-z\d-\/_.]+)?' );

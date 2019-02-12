@@ -107,8 +107,11 @@ Vue.component('not-found', require('./components/NotFound.vue').default);
         search: ''
     },
     methods: {
-        searchit(){
+        searchit: _.debounce(() => {
             Fire.$emit('searching');
+        },1000),
+        printme(){
+            window.print();
         }
     }
 });
